@@ -17,11 +17,11 @@ pipeline {
         }
 
         stage('Checkout') {
-            steps {
-                // Clone the repository from GitHub
-                git 'https://github.com/saisahas143/deployment-sample.git'
-            }
-        }
+    steps {
+        // Clone the repository from GitHub
+        git branch: 'main', url: 'https://github.com/saisahas143/deployment-sample.git'
+    }
+}
 
         stage('Install Dependencies') {
             steps {
