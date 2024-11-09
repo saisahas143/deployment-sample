@@ -1,3 +1,10 @@
+stage('Verify Git Installation') {
+    steps {
+        script {
+            sh 'git --version'
+        }
+    }
+}
 pipeline {
     agent any
 
