@@ -25,10 +25,8 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                script {
-                    // Example to install dependencies (adjust based on your app)
-                    sh 'npm install'  // If using Node.js, adjust if necessary
-                }
+                // Skip npm install for non-Node.js project
+                echo 'No dependencies to install'
             }
         }
 
