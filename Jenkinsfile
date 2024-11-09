@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        EC2_INSTANCE_IP = '54.221.122.13'  // Your EC2 instance's public IP
+        EC2_INSTANCE_IP = '3.91.202.99'  // Your EC2 instance's public IP
         SSH_KEY_PATH = 'C:/Users/Puneeth/Desktop/practice-ec2-keypair.pem'  // Path to your private SSH key
         REMOTE_DIR = '/var/www/html'  // Directory on EC2 to deploy the app
     }
