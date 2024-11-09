@@ -1,20 +1,21 @@
-stage('Verify Git Installation') {
-    steps {
-        script {
-            sh 'git --version'
-        }
-    }
-}
 pipeline {
     agent any
 
     environment {
         EC2_INSTANCE_IP = '3.91.202.99'  // Your EC2 instance's public IP
-        SSH_KEY_PATH = 'C:/Users/Puneeth/Desktop/practice-ec2-keypair.pem'  // Path to your private SSH key
+        SSH_KEY_PATH = '/c/Users/Puneeth/Desktop/practice-ec2-keypair.pem'  // Path to your private SSH key in Unix-style format
         REMOTE_DIR = '/var/www/html'  // Directory on EC2 to deploy the app
     }
 
     stages {
+        stage('Verify Git Installation') {
+            steps {
+                script {
+                    sh 'git --version'
+                }
+            }
+        }
+
         stage('Checkout') {
             steps {
                 // Clone the repository from GitHub
