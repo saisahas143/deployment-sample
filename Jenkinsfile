@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IMAGE = 'my-node-app'
+        PORT = '3000'
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
@@ -11,15 +16,15 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build('hello-docker')
+                    docker.build(DOCKER_IMAGE)
                 }
             }
         }
 
-        stage('Stop Existing Container') {
+        stage('Stop and Remove Existing Container') {
             steps {
                 script {
-                    // Stop and remove any running container on port 3000
+                    // Check if the container is already running
                     def containerID = sh(script: "docker ps -q --filter 'publish=3000'", returnStdout: true).trim()
                     if (containerID) {
                         sh "docker stop ${containerID}"
@@ -29,10 +34,11 @@ pipeline {
             }
         }
 
-        stage('Run New Docker Container') {
+        stage('Run Docker Container') {
             steps {
                 script {
-                    sh "docker run -d -p 3000:3000 hello-docker"
+                    // Run the new Docker container
+                    sh "docker run -d -p ${PORT}:${PORT} ${DOCKER_IMAGE}"
                 }
             }
         }
@@ -40,10 +46,10 @@ pipeline {
 
     post {
         success {
-            echo 'Build and Deployment completed successfully!'
+            echo 'Deployment was successful!'
         }
         failure {
-            echo 'Build or Deployment failed.'
+            echo 'There was an issue with the deployment.'
         }
     }
 }
