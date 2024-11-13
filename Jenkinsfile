@@ -1,11 +1,12 @@
 pipeline {
     agent any
 
-   stage('Clone Repository') {
-    steps {
-        git url: 'https://github.com/saisahas143/deployment-sample.git', branch: 'main'
-    }
-}
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git url: 'https://github.com/saisahas143/deployment-sample.git', branch: 'main'
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
@@ -23,6 +24,15 @@ pipeline {
                     sh 'docker run -d -p 3000:3000 hello-docker'
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Docker image built and container is running successfully.'
+        }
+        failure {
+            echo 'There was an issue with the build or deployment.'
         }
     }
 }
