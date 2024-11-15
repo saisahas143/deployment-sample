@@ -1,17 +1,15 @@
-// Load the required modules
 const express = require('express');
-const path = require('path');
-
-// Create an Express application
 const app = express();
 
-// Serve static files (index.html, etc.) from the current directory
-app.use(express.static(path.join(__dirname, '/')));
+// Serve static files from the current directory (if applicable)
+app.use(express.static(__dirname));
 
-// Define the port for the server
-const PORT = process.env.PORT || 3000;
+// Define a route for "/"
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
 
 // Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen(3000, '0.0.0.0', () => {
+    console.log('Server is running on http://0.0.0.0:3000');
 });
