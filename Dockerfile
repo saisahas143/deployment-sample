@@ -1,20 +1,17 @@
-# Use Node.js as the base image
+# Use an official Node.js runtime as a parent image
 FROM node:14
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json if available
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application files (including index.html)
+# Copy the current directory contents into the container
 COPY . .
 
-# Expose the port your app will run on
-EXPOSE 3000
+# Install any needed dependencies (optional if you're not using npm or yarn)
+# RUN npm install   # Uncomment if needed
 
-# Command to run the app (start server)
+# Make port 8080 available to the world outside this container
+EXPOSE 8080
+
+# Run app.js when the container launches
 CMD ["node", "app.js"]
